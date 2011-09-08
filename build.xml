@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CommonExpenses" basedir="." default="install">
+
+    <!-- project-specific variables -->
+    <property name="package_name"	value="ce.war" />
+    <property name="package_dest"	value="${basedir}/dist" />
+    <property name="package_path"	value="${package_dest}/${package_name}" />
+    <property name="libraries"		value="${basedir}/lib" />
+    <property name="src"			value="${basedir}/src" />
+    <property name="ejb"			value="${src}/com/dalendev/ce/bean" />
+    <property name="web_conf"		value="${basedir}/WebContent" />
+	<property name="webinf" 		value="${web_conf}/WEB-INF"/>
+	<property name="assets"			value="${web_conf}/assets" />
+    
+    <!-- variables for building webapp structure -->
+    <property name="tmp"				value="${basedir}/tmp" />
+    <property name="tmp_webinf"			value="${tmp}/WEB-INF" />
+    <property name="tmp_webinf_lib"		value="${tmp_webinf}/lib" />
+    <property name="tmp_webinf_classes"	value="${tmp_webinf}/classes" />
+    <property name="tmp_metainf"		value="${tmp}/META-INF" />
+	<property name="tmp_tags"			value="${tmp_webinf}/tags" />
+	<property name="tmp_assets"			value="${tmp}/assets" />
+	<property name="tmp_jsp"			value="${tmp}/jsp" />
+	<property name="tmp_css"			value="${tmp_assets}/css" />
+	<property name="tmp_js"				value="${tmp_assets}/js" />
+	<property name="tmp_img"			value="${tmp_assets}/img" />
+	
+    <!-- include all project's libraries -->
+	<echo>Including libraries.....</echo>
+    <path id="build_class_path">
+        <fileset dir="${libraries}">
+            <include name="**/*.jar" />
+        </fileset>
+    </path>	
+    
+    <!-- clean up temp folder -->
+    <target name="clean">
+        <delete>
+            <fileset dir="${package_dest}" includes="**/*"/>
+        </delete>
+        <delete dir="${tmp}" />
+    </target>
+    
+    <!-- build temp package structure -->
+    <target name="prepare" depends="clean">
+        <mkdir dir="${package_dest}" />
+        <mkdir dir="${tmp}" />
+    	<mkdir dir="${tmp_jsp}" />
+      	<mkdir dir="${tmp_tags}" />    	
+        <mkdir dir="${tmp_webinf}" />
+        <mkdir dir="${tmp_webinf_lib}" />
+    	<mkdir dir="${tmp_assets}" />
+    	<mkdir dir="${tmp_css}" />
+    	<mkdir dir="${tmp_img}" />
+    	<mkdir dir="${tmp_js}" />    	
+        <mkdir dir="${tmp_webinf_classes}" />
+        <mkdir dir="${tmp_metainf}" />
+    </target>
+    
+    <!-- COMPILE -->
+    <target name="compile" depends="prepare">
+        <echo>Compiling Project.....</echo>
+        <echo>Compiling ${src} files ...</echo>
+        <javac debug="on" srcdir="${src}" destdir="${tmp_webinf_classes}" includes="**/*.java">
+            <classpath refid="build_class_path" />
+        </javac>
+    </target>
+    
+    <!-- PACKAGE -->
+	<target name="package" depends="compile">
+		<echo>Packaging Project....</echo>
+		
+		<!-- package EJBs and move to lib folder -->
+		<jar destfile="${tmp_webinf_lib}/ejb.jar" basedir="${tmp_webinf_classes}/com/dalendev/ce/bean" includes="**/*.class" />
+	     
+		<!-- copy the config files -->
+		<copy file="${web_conf}/META-INF/MANIFEST.MF" tofile="${tmp_metainf}/MANIFEST.MF" overwrite="true" />
+		<copy file="${webinf}/web.xml" tofile="${tmp_webinf}/web.xml" overwrite="true" />
+		
+		<!-- copy configuration files -->
+		<copy todir="${tmp_webinf_classes}/config">
+			<fileset dir="${src}/config">
+				<include name="**/*.xml"/>
+			</fileset>
+		</copy>
+		
+		<!-- copy presentation files -->
+		<!-- tags -->
+		<copy todir="${tmp_tags}">
+			<fileset dir="${webinf}/tags">
+				<include name="**/*.tag"/>
+			</fileset>
+		</copy>
+		<!-- jsp -->
+		<copy todir="${tmp_jsp}">
+			<fileset dir="${web_conf}/jsp">
+				<include name="**/*.jsp" />
+			</fileset>
+		</copy>
+		<!-- css -->
+		<copy todir="${tmp_css}">
+			<fileset dir="${assets}/css">
+				<include name="**/*.css" />
+			</fileset>
+		</copy>
+		<!-- js -->
+		<copy todir="${tmp_js}">
+			<fileset dir="${assets}/js">
+				<include name="**/*.js" />
+			</fileset>
+		</copy>
+		<!-- img -->
+		<copy todir="${tmp_img}">
+			<fileset dir="${assets}/img">
+				<include name="**/*" />
+			</fileset>
+		</copy>
+		
+		<!-- copy libraries files -->
+		<copy todir="${tmp_webinf_lib}">
+			<fileset dir="${libraries}">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+	    	
+		<!-- the ant war task. with all resources in place, create the war file -->
+		<war destfile="${package_path}" basedir="${tmp}">
+			<lib dir="${tmp_webinf_lib}" />
+			<classes dir="${tmp_webinf_classes}" /> 
+		</war>
+	</target>
+    
+    <target name="install" depends="package">
+    	<echo>Done!!!!</echo>
+    </target>
+    
+</project>
+
