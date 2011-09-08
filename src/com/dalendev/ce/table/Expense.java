@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +41,7 @@ public class Expense implements java.io.Serializable
 	@Column(name="meta_ts", nullable=false)
 	private Date meta_ts = new Date();
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "expense")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "expense", cascade = CascadeType.ALL)
 	private Set<Share> shares = new HashSet<Share>(0);
 
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -25,7 +25,13 @@
 						<td>${project.description}</td>
 						<td>${project.meta_ts}</td>
 						<td><a href='/ce/s/project?pid=<c:out value="${project.id}" />&action=edit'>edit</a></td>
-						<td>delete</td>
+						<td>
+							<form action="/ce/s/project" method="POST">
+								<input type="hidden" name="pid" value="${project.id}" />
+								<input type="hidden" name="action" value="delete" />
+								<input type="submit" value="delete" />
+							</form>
+						</td>
 					</tr>
 				</c:forEach>
 			</tbody>

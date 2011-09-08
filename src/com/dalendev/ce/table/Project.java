@@ -18,6 +18,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Cascade;
+
 
 @Entity
 @Table(name = "project")
@@ -38,7 +40,7 @@ public class Project implements java.io.Serializable
 	@Column(name="meta_ts", nullable=false)
 	private Date meta_ts = new Date();
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
 	private Set<Expense> expenses = new HashSet<Expense>(0);
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.project", cascade = CascadeType.ALL, targetEntity = Partecipate.class)

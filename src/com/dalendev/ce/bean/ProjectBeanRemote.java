@@ -25,4 +25,5 @@ public interface ProjectBeanRemote
 	public Project getProject(int project);
 	public List<TempExpensesContainer> getProjectExpenses(int project);
 	public Project updateProject(int project, String name, String description);
+	public Boolean deleteProject(int project);
 }

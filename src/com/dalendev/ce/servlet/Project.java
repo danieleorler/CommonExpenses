@@ -23,7 +23,8 @@ public class Project extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private com.dalendev.ce.bean.ProjectBeanRemote project; 
+	private com.dalendev.ce.bean.ProjectBeanRemote project;
+	Logger logger = LoggerFactory.getLogger(Project.class);
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -94,6 +95,28 @@ public class Project extends HttpServlet
 		request.getRequestDispatcher("/jsp/messages/ok.jsp").forward(request, response);		
 	}
 	
+	private void deleteProject(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		
+		logger.info("deleting project: "+pid);
+		
+		Boolean res = project.deleteProject(pid);
+		
+		if(res)
+		{
+			request.setAttribute("message", "Project Deleted");
+			request.setAttribute("description", "You have succesfully deleted the project");			
+			request.getRequestDispatcher("/jsp/messages/ok.jsp").forward(request, response);
+		}
+		else
+		{
+			request.setAttribute("error", "Project not Deleted");
+			request.setAttribute("description", "There were some problems removing the project");				
+			request.getRequestDispatcher("/jsp/messages/error.jsp").forward(request, response);			
+		}
+	}
+	
 	private void listProjects(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HashMap<String, List<com.dalendev.ce.table.Project>> map = project.list((User)request.getSession().getAttribute("loggedUser"));
@@ -136,7 +159,6 @@ public class Project extends HttpServlet
 	{
 		String action = request.getParameter("action");
 		
-	    Logger logger = LoggerFactory.getLogger(Project.class);
 	    logger.info("action executed: "+action);
 
 		
@@ -151,6 +173,10 @@ public class Project extends HttpServlet
 		else if ("update".compareToIgnoreCase(action) == 0)
 		{
 			updateProject(request, response);
+		}
+		else if ("delete".compareToIgnoreCase(action) == 0)
+		{
+			deleteProject(request, response);
 		}		
 		else
 		{
@@ -164,7 +190,6 @@ public class Project extends HttpServlet
 	{
 		String action = request.getParameter("action");
 		
-	    Logger logger = LoggerFactory.getLogger(Project.class);
 	    logger.info("action executed: "+action);
 
 		
