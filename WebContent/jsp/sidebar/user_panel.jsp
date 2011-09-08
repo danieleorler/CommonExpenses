@@ -6,7 +6,7 @@
 	
 	<ul>
 		<li><a href="/ce/s/project?action=list">Your Projects</a></li>
-		<li><a>Your Profile</a></li>
+		<li><a href="/ce/profile">Your Profile</a></li>
 		<li><a href="/ce/s/authenticate">Log-Out</a></li>
 	</ul>
 </div>

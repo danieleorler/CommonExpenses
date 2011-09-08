@@ -1,4 +1,4 @@
 	<div id="footer">
-		<p>Copyright &copy; simplestyle_7 | <a href="http://validator.w3.org/check?uri=referer">HTML5</a> | <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> | <a href="http://www.html5webtemplates.co.uk">design from HTML5webtemplates.co.uk</a></p>
+		<p>Common Expenses - Track your Expenses | <a href="http://blog.dalendev.com/" target="_blank">blog</a></p>
 	</div>
 </div>

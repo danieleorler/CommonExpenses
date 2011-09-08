@@ -19,7 +19,7 @@
 			
 				<div class="expense">
 					<h4>${expense.e.name}</h4>
-					<span>${expense.e.description}</span>
+					<span>${expense.e.description}, ${expense.e.date}</span>
 				</div>
 				
 				<table id='<c:out value="${expense.e.id}" />'>

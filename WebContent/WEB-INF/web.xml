@@ -21,6 +21,10 @@
     <jsp-file>jsp/register.jsp</jsp-file>
   </servlet>
   <servlet>
+    <servlet-name>ProfileJSP</servlet-name>
+    <jsp-file>jsp/profile.jsp</jsp-file>
+  </servlet>  
+  <servlet>
     <servlet-name>ProjectsJSP</servlet-name>
     <jsp-file>jsp/project/projects.jsp</jsp-file>
   </servlet>
@@ -36,6 +40,10 @@
     <servlet-name>RegisterJSP</servlet-name>
     <url-pattern>/register</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ProfileJSP</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>  
   <servlet-mapping>
     <servlet-name>Register</servlet-name>
     <url-pattern>/s/register</url-pattern>

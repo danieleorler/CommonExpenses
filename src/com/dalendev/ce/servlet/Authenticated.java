@@ -65,7 +65,8 @@ public class Authenticated implements Filter {
 				Boolean noAuth = url.equalsIgnoreCase("/ce")
 								|| url.equalsIgnoreCase("/ce/")
 								|| url.equalsIgnoreCase("/ce/register")
-								|| url.equalsIgnoreCase("/ce/s/authenticate");
+								|| url.equalsIgnoreCase("/ce/s/authenticate")
+								|| url.equalsIgnoreCase("/ce/profile");
 				
 				if(user == null && !noAuth)
 				{
