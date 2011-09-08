@@ -3,8 +3,6 @@ package com.dalendev.ce.servlet;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.ejb.EJB;
@@ -13,8 +11,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.dalendev.ce.table.Expense;
 import com.dalendev.ce.table.User;
 import com.dalendev.ce.util.TempExpensesContainer;
 import com.google.gson.Gson;
@@ -85,6 +81,19 @@ public class Project extends HttpServlet
 		}
 	}
 	
+	private void updateProject(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		String name = request.getParameter("pname");
+		String description = request.getParameter("pdesc");
+		
+		com.dalendev.ce.table.Project p = project.updateProject(pid, name, description);
+		
+		request.setAttribute("message", "Project Updated");
+		request.setAttribute("description", "You have succesfully updated the project <i>"+p.getName()+"</i>");			
+		request.getRequestDispatcher("/jsp/messages/ok.jsp").forward(request, response);		
+	}
+	
 	private void listProjects(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		HashMap<String, List<com.dalendev.ce.table.Project>> map = project.list((User)request.getSession().getAttribute("loggedUser"));
@@ -115,6 +124,14 @@ public class Project extends HttpServlet
 		request.getRequestDispatcher("/jsp/project/showproject.jsp").forward(request, response);
 	}
 	
+	private void editProject(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		int pid = Integer.parseInt(request.getParameter("pid"));
+		com.dalendev.ce.table.Project p = project.getProject(pid);
+		request.setAttribute("project", p);
+		request.getRequestDispatcher("/jsp/project/newproject.jsp").forward(request, response);
+	}
+	
 	public void route(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		String action = request.getParameter("action");
@@ -131,6 +148,10 @@ public class Project extends HttpServlet
 		{
 			createProject(request, response);
 		}
+		else if ("update".compareToIgnoreCase(action) == 0)
+		{
+			updateProject(request, response);
+		}		
 		else
 		{
 			request.setAttribute("error", "Page not Found");
@@ -155,6 +176,10 @@ public class Project extends HttpServlet
 		{
 			showProject(request, response);
 		}
+		else if ("edit".compareToIgnoreCase(action) == 0)
+		{
+			editProject(request, response);
+		}		
 		else
 		{
 			request.setAttribute("error", "Page not Found");

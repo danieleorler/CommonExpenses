@@ -181,5 +181,22 @@ public class ProjectBean implements ProjectBeanRemote
 		
 		return ret;
 	}
+	
+	public Project updateProject(int project, String name, String description)
+	{
+		Project p = (Project)session.get(Project.class, project);
+		
+		p.setName(name);
+		p.setDescription(description);
+		
+		session.getTransaction().begin();
+		
+		session.update(p);
+		
+		session.getTransaction().commit();
+		
+		return p;
+		
+	}
 
 }

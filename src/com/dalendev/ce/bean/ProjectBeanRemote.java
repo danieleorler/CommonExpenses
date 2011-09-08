@@ -24,5 +24,5 @@ public interface ProjectBeanRemote
 	public List<User> listUsers(int project);
 	public Project getProject(int project);
 	public List<TempExpensesContainer> getProjectExpenses(int project);
-	//public Set<Share> getExpenseShares(int share);
+	public Project updateProject(int project, String name, String description);
 }

@@ -24,7 +24,7 @@
 						<td>${project.name}</td>
 						<td>${project.description}</td>
 						<td>${project.meta_ts}</td>
-						<td>edit</td>
+						<td><a href='/ce/s/project?pid=<c:out value="${project.id}" />&action=edit'>edit</a></td>
 						<td>delete</td>
 					</tr>
 				</c:forEach>
