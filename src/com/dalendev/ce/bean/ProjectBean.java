@@ -202,9 +202,6 @@ public class ProjectBean implements ProjectBeanRemote
 		session.getTransaction().begin();
 		Project p = (Project)session.get(Project.class, project);
 		
-//		Query q = session.createQuery("FROM Project WHERE id = "+project);
-//		Project p = (Project)q.list().get(0);
-		
 	    Logger logger = LoggerFactory.getLogger(Project.class);
 	    logger.info("deleting project: "+p.getName()+" id: "+p.getId());		
 		

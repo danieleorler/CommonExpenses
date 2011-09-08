@@ -12,6 +12,9 @@
 			<p style="padding: 0 0 9px 0;">
 				<textarea name="edesc" class="search">Expense Description</textarea>
 			</p>
+			<p style="padding: 0 0 9px 0;">
+				<input style="width: 300px;" class="search" type="date" name="edate" value="" />
+			</p>			
 			
 			<input type="hidden" name="epid" value='<c:out value="${pid}" />' />
 			

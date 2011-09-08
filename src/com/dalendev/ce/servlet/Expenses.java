@@ -1,7 +1,10 @@
 package com.dalendev.ce.servlet;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.SimpleFormatter;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -9,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.DateFormatter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,14 +88,29 @@ public class Expenses extends HttpServlet
 	{
 		String name = request.getParameter("ename");
 		String description = request.getParameter("edesc");
-		int pid = Integer.parseInt(request.getParameter("epid"));
-		User user = (User)request.getSession().getAttribute("loggedUser");
+		String sdate = request.getParameter("edate");
 		
-		com.dalendev.ce.table.Expense e = expense.createExpense(name, description, new Date(), pid,user);
-		
-		request.setAttribute("message", "Expense Saved");
-		request.setAttribute("description", "The expense <i>"+e.getName()+"</i> has been succesfully created!");
-		request.getRequestDispatcher("/jsp/messages/ok.jsp").forward(request, response);
+		SimpleDateFormat formatter = new SimpleDateFormat("y-M-d");
+		Date date;
+		try
+		{
+			date = formatter.parse(sdate);
+			
+			int pid = Integer.parseInt(request.getParameter("epid"));
+			User user = (User)request.getSession().getAttribute("loggedUser");
+			
+			com.dalendev.ce.table.Expense e = expense.createExpense(name, description, date, pid,user);
+			
+			request.setAttribute("message", "Expense Saved");
+			request.setAttribute("description", "The expense <i>"+e.getName()+"</i> has been succesfully created!");
+			request.getRequestDispatcher("/jsp/messages/ok.jsp").forward(request, response);			
+		}
+		catch (ParseException e1)
+		{
+			request.setAttribute("error", "Expense not saved");
+			request.setAttribute("description", "The date you provided is not valid");				
+			request.getRequestDispatcher("/jsp/messages/error.jsp").forward(request, response);	
+		}
 	}
 	
 	private void addShare(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException

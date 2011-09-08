@@ -14,10 +14,12 @@
 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz" />
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js" type="text/javascript"></script>
 	<script src=<t:assetspath file="jquery.placeholder.js" type="js" /> type="text/javascript"></script>
 	<script src=<t:assetspath file="jquery.wkslider.js" type="js" /> type="text/javascript"></script>
 	<script src=<t:assetspath file="underscore.js" type="js" /> type="text/javascript"></script>
 	<script src=<t:assetspath file="init.js" type="js" /> type="text/javascript"></script>
 	
 	<link rel="stylesheet" type="text/css" href=<t:assetspath file="style.css" type="css" /> />
+	<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />
 </head>

@@ -6,6 +6,9 @@ $(document).ready(function()
 	//wkslider
 	$('.wkslider').wkslider({activate : 'o_active', selector : '', autoplay:true, time:5000});
 	
+	//datepicker
+	$('input[type="date"]').datepicker({dateFormat: 'yy-mm-dd'});
+	
 	//add new user
 	$('.add').bind('click',function()
 			{
