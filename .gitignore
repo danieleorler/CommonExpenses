@@ -2,3 +2,8 @@
 /tmp
 /droptables.sql
 /dist
+.DS_Store
+.project
+.settings/
+build/
+

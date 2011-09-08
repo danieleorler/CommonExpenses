@@ -35,7 +35,8 @@ public class Authenticated implements Filter {
 	/**
 	 * @see Filter#destroy()
 	 */
-	public void destroy() {
+	public void destroy()
+	{
 		// TODO Auto-generated method stub
 	}
 
